@@ -1,0 +1,6 @@
+check,result,pass
+"04: derived (nu,E) physically valid for every row",100.0%,True
+06: re-simulated MC mean loss matches closed-form EL,$5.81M vs $5.82M (0.1% diff),True
+05/08: saved case-control model is monotonic in corrosion_rate,True,True
+03: DS5 element-cost coverage of DS1 matches EDA's 32.6%,32.6%,True
+"05: case-control table still separates on corrosion rate (sanity, not a repeat of the AUC)",Spearman=0.134,True

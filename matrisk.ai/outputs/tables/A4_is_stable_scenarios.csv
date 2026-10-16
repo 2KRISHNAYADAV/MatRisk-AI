@@ -1,0 +1,3 @@
+scenario,AUC
+A: composition+category only,0.6696
+B: + measured properties (excl. energy_above_hull_eV),0.7148

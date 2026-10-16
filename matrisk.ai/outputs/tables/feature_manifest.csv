@@ -1,0 +1,161 @@
+dataset,column,role,reason
+DS1,mean_atomic_mass,feature,composition descriptors parsed from formula; carry little signal per EDA A4 but are the only composition-only features available
+DS1,mean_Z,feature,composition descriptors parsed from formula; carry little signal per EDA A4 but are the only composition-only features available
+DS1,max_Z,feature,composition descriptors parsed from formula; carry little signal per EDA A4 but are the only composition-only features available
+DS1,min_Z,feature,composition descriptors parsed from formula; carry little signal per EDA A4 but are the only composition-only features available
+DS1,atoms_per_formula,feature,composition descriptors parsed from formula; carry little signal per EDA A4 but are the only composition-only features available
+DS1,n_elements_parsed,feature,composition descriptors parsed from formula; carry little signal per EDA A4 but are the only composition-only features available
+DS1,density_implied_g_cm3,feature,"weak: only ~5% of rows match within 10% (EDA A4); kept as a feature, not a replacement for supplied density"
+DS1,density_ratio_to_implied,feature,"weak: only ~5% of rows match within 10% (EDA A4); kept as a feature, not a replacement for supplied density"
+DS1,nu_from_KG,derived_post_prediction,"computed FROM (K,G); apply this formula to a model's K,G predictions to get physics-consistent nu/E — never use as an input feature (circular) and never fit nu/E as independent regression targets"
+DS1,E_from_KG_GPa,derived_post_prediction,"computed FROM (K,G); apply this formula to a model's K,G predictions to get physics-consistent nu/E — never use as an input feature (circular) and never fit nu/E as independent regression targets"
+DS1,pugh_K_over_G,derived_post_prediction,"computed FROM (K,G); apply this formula to a model's K,G predictions to get physics-consistent nu/E — never use as an input feature (circular) and never fit nu/E as independent regression targets"
+DS1,is_ductile_pugh,derived_post_prediction,"computed FROM (K,G); apply this formula to a model's K,G predictions to get physics-consistent nu/E — never use as an input feature (circular) and never fit nu/E as independent regression targets"
+DS1,poisson_ratio,target_do_not_model_independently,"only ~71% of rows satisfy nu=nu(K,G) within 0.01 (audit DS1-10); report it only as derived from predicted K,G"
+DS1,energy_above_hull_eV,exclude_leakage_for_is_stable,is_stable is a deterministic threshold of this column (EDA A6); using it as a feature for is_stable is leakage by construction
+DS1,log1p_shear_modulus_GPa,target_transform,"log1p variant of a right-skewed target (|skew|>1, computed above); fit on this scale, exponentiate (expm1) predictions back"
+DS1,log1p_band_gap_eV,target_transform,"log1p variant of a right-skewed target (|skew|>1, computed above); fit on this scale, exponentiate (expm1) predictions back"
+DS1,is_metal,feature_and_stage1_target,exact complement of band_gap_eV==0 (verified above); use as the classifier stage of a two-part band-gap model
+DS1,catmean_bulk_modulus_GPa,feature,GroupKFold-by-formula out-of-fold category mean; strong baseline feature (EDA A4) that cannot leak through duplicate material_id/formula rows
+DS1,catmean_shear_modulus_GPa,feature,GroupKFold-by-formula out-of-fold category mean; strong baseline feature (EDA A4) that cannot leak through duplicate material_id/formula rows
+DS1,catmean_formation_energy_per_atom_eV,feature,GroupKFold-by-formula out-of-fold category mean; strong baseline feature (EDA A4) that cannot leak through duplicate material_id/formula rows
+DS1,catmean_density_g_cm3,feature,GroupKFold-by-formula out-of-fold category mean; strong baseline feature (EDA A4) that cannot leak through duplicate material_id/formula rows
+DS1,catmean_melting_point_K,feature,GroupKFold-by-formula out-of-fold category mean; strong baseline feature (EDA A4) that cannot leak through duplicate material_id/formula rows
+DS1,catmean_band_gap_eV,feature,GroupKFold-by-formula out-of-fold category mean; strong baseline feature (EDA A4) that cannot leak through duplicate material_id/formula rows
+DS1,element_cost_usd_per_kg,feature,static (single-date) mass-weighted element cost from DS5; NaN + available=False where any element is unpriced -- never imputed (README's GAN cost-constraint input)
+DS1,element_cost_available,feature,static (single-date) mass-weighted element cost from DS5; NaN + available=False where any element is unpriced -- never imputed (README's GAN cost-constraint input)
+DS1,row_id,id,material_id is duplicated with conflicting formulas (audit DS1-01); row_id is the only reliable key
+DS1,material_id,metadata_not_unique,42 rows share 21 ids with conflicting formulas -- never join on this column
+DS1,crystal_system,feature,supplied structural/label columns
+DS1,spacegroup_number,feature,supplied structural/label columns
+DS1,category,feature,supplied structural/label columns
+DS1,n_elements,feature,supplied structural/label columns
+DS1,nsites,feature,supplied structural/label columns
+DS1,volume_A3,feature,supplied structural/label columns
+DS1,bulk_modulus_GPa,target,primary DS1 regression targets named in the README
+DS1,shear_modulus_GPa,target,primary DS1 regression targets named in the README
+DS1,formation_energy_per_atom_eV,target,primary DS1 regression targets named in the README
+DS1,density_g_cm3,target,primary DS1 regression targets named in the README
+DS1,melting_point_K,target,primary DS1 regression targets named in the README
+DS1,band_gap_eV,target,primary DS1 regression targets named in the README
+DS1,is_stable,target,classification target; energy_above_hull_eV excluded from its feature set (see A2)
+DS3,material,feature,categorical drivers (EDA B1: material+environment adj R2=0.77 of log corrosion)
+DS3,bridge_type,feature,categorical drivers (EDA B1: material+environment adj R2=0.77 of log corrosion)
+DS3,location,feature,categorical drivers (EDA B1: material+environment adj R2=0.77 of log corrosion)
+DS3,corrosion_environment,feature,categorical drivers (EDA B1: material+environment adj R2=0.77 of log corrosion)
+DS3,is_metal,feature,categorical drivers (EDA B1: material+environment adj R2=0.77 of log corrosion)
+DS3,age_years,feature,supplied/derived continuous drivers
+DS3,design_life_years,feature,supplied/derived continuous drivers
+DS3,age_ratio,feature,supplied/derived continuous drivers
+DS3,corrosion_rate_mm_yr,feature,supplied/derived continuous drivers
+DS3,log_corr,feature,supplied/derived continuous drivers
+DS3,adt,feature,supplied/derived continuous drivers
+DS3,deck_area_sqft,feature,supplied/derived continuous drivers
+DS3,tensile_strength_MPa,feature,supplied/derived continuous drivers
+DS3,yield_strength_MPa,feature,supplied/derived continuous drivers
+DS3,thick_frac,feature,remaining/original thickness; use INSTEAD of remaining_thickness_mm (see decision below)
+DS3,remaining_thickness_mm,exclude_redundant,== original_thickness_mm - corrosion_rate_mm_yr*age_years (audit DS3-10); double-counts with thick_frac/corrosion*age
+DS3,fatigue_cycles_millions,exclude_redundant,within 10% of ADT*365*age/1e6 for 81.5% of rows (not an independent measurement)
+DS3,paris_C,exclude_redundant,per-material constants (zero within-material variance); information already captured by `material`/`is_metal`
+DS3,paris_m,exclude_redundant,per-material constants (zero within-material variance); information already captured by `material`/`is_metal`
+DS3,structurally_deficient,exclude_leakage_for_condition_rating,exact function of condition_rating<=4 (audit DS3-08)
+DS3,last_inspection_date,exclude,earlier than year_built for some rows (audit DS3-11); audit decision was to never use it as a predictor
+DS3,condition_rating,target,ordinal NBI 1-9 rating / PD-state proxy
+DS3,replacement_cost_M,feature,EAD inputs
+DS3,loan_outstanding_M,feature,EAD inputs
+DS3,ltv,feature,EAD inputs
+DS3,cost_per_sqft,feature,EAD inputs
+DS3,insurance_premium_K_yr,feature_benchmark_only,"not risk-based (EDA D2: rho with condition/corrosion <=0.01); usable only as an order-of-magnitude benchmark, not a training target"
+DS3,prem_rate_bps,feature_benchmark_only,"not risk-based (EDA D2: rho with condition/corrosion <=0.01); usable only as an order-of-magnitude benchmark, not a training target"
+DS3,below_crit_lo,feature,descriptive exposure-to-critical-thickness features from the workbook's 10-asset reference ratios (EDA B4)
+DS3,below_crit_hi,feature,descriptive exposure-to-critical-thickness features from the workbook's 10-asset reference ratios (EDA B4)
+DS3,yrs_to_crit_hi,feature,descriptive exposure-to-critical-thickness features from the workbook's 10-asset reference ratios (EDA B4)
+DS6,was_predicted,exclude_leakage,"known only after the failure was detected/processed (audit); must not feed a failure-occurrence, severity or LGD-at-event model"
+DS6,warning_lead_months,exclude_leakage,"known only after the failure was detected/processed (audit); must not feed a failure-occurrence, severity or LGD-at-event model"
+DS6,detected_by,exclude_leakage,"known only after the failure was detected/processed (audit); must not feed a failure-occurrence, severity or LGD-at-event model"
+DS6,insurance_claim_filed,exclude_leakage,"known only after the failure was detected/processed (audit); must not feed a failure-occurrence, severity or LGD-at-event model"
+DS6,regulatory_action,exclude_leakage,"known only after the failure was detected/processed (audit); must not feed a failure-occurrence, severity or LGD-at-event model"
+DS6,structure_type,feature,pre-event descriptors
+DS6,material,feature,pre-event descriptors
+DS6,location,feature,pre-event descriptors
+DS6,corrosion_environment,feature,pre-event descriptors
+DS6,age_at_event_years,feature,pre-event descriptors
+DS6,corrosion_rate_mm_yr,feature,pre-event descriptors
+DS6,failure_mode,feature_weak,"statistically independent of material/structure/environment (EDA C2, Cramer's V<=0.045); keep as a descriptive column, expect little predictive value"
+DS6,severity,target,severity explains 90% of loss-ratio rank variance (EDA D3); the real LGD driver
+DS6,severity_ord,target,severity explains 90% of loss-ratio rank variance (EDA D3); the real LGD driver
+DS6,loss_ratio,target,"LGD targets, capped and uncapped variants (audit decision: report both)"
+DS6,lr_cap,target,"LGD targets, capped and uncapped variants (audit decision: report both)"
+DS6,log_repair_cost,target,"LGD targets, capped and uncapped variants (audit decision: report both)"
+DS6,log_replacement_value,target,"LGD targets, capped and uncapped variants (audit decision: report both)"
+DS6_case_control,material,feature,shared feature space between DS3 (controls) and DS6 bridge failures (cases); only corrosion rate separates them with any strength (AUC~0.60)
+DS6_case_control,corrosion_environment,feature,shared feature space between DS3 (controls) and DS6 bridge failures (cases); only corrosion rate separates them with any strength (AUC~0.60)
+DS6_case_control,location,feature,shared feature space between DS3 (controls) and DS6 bridge failures (cases); only corrosion rate separates them with any strength (AUC~0.60)
+DS6_case_control,age_years,feature,shared feature space between DS3 (controls) and DS6 bridge failures (cases); only corrosion rate separates them with any strength (AUC~0.60)
+DS6_case_control,corrosion_rate_mm_yr,feature,shared feature space between DS3 (controls) and DS6 bridge failures (cases); only corrosion rate separates them with any strength (AUC~0.60)
+DS6_case_control,is_metal,feature,shared feature space between DS3 (controls) and DS6 bridge failures (cases); only corrosion rate separates them with any strength (AUC~0.60)
+DS6_case_control,label,target,"1 = DS6 bridge failure (case), 0 = DS3 population (control)"
+DS6_case_control,source,metadata_group_for_cv,"use as the CV group / stratification key, not as a feature -- it is definitionally tied to the label"
+DS3,bridge_id,id,unique; no counterpart in DS6 (no asset-level join)
+DS6,event_id,id,unique failure-event identifier
+DS2DS4,fwd_ret_1,target,forward-looking; last `h` rows of each commodity are NaN by construction (no data past the sample end) -- do not fill
+DS2DS4,fwd_ret_5,target,forward-looking; last `h` rows of each commodity are NaN by construction (no data past the sample end) -- do not fill
+DS2DS4,fwd_ret_21,target,forward-looking; last `h` rows of each commodity are NaN by construction (no data past the sample end) -- do not fill
+DS2DS4,fwd_ret_63,target,forward-looking; last `h` rows of each commodity are NaN by construction (no data past the sample end) -- do not fill
+DS2DS4,fwd_vol_21,target,forward-looking; last `h` rows of each commodity are NaN by construction (no data past the sample end) -- do not fill
+DS2DS4,month,feature,calendar-month seasonality encoding (EDA A5 found this is the one real structure in DS2)
+DS2DS4,month_sin,feature,calendar-month seasonality encoding (EDA A5 found this is the one real structure in DS2)
+DS2DS4,month_cos,feature,calendar-month seasonality encoding (EDA A5 found this is the one real structure in DS2)
+DS2DS4,daily_return_deseasonalized,feature,calendar-month seasonality encoding (EDA A5 found this is the one real structure in DS2)
+DS2DS4,month_mean_return,metadata,"full-sample commodity x month mean used only to build daily_return_deseasonalized; a genuinely causal version would roll this mean forward in time -- flagged as a mild look-ahead convention, standard for a seasonal factor but not valid for backtesting without rolling it"
+DS2DS4,term_spread_z,feature,"within-commodity z-score; raw column excluded (33x scale range across commodities, EDA A7)"
+DS2DS4,term_spread,exclude_redundant,inconsistent raw scale across commodities; use term_spread_z
+DS2DS4,mqi_z,feature,"within-commodity standardised DS4 features; preferred over raw levels since 81-99.9% of their variance is between-commodity (EDA B1), not a time-varying signal"
+DS2DS4,mqi_5d_trend_z,feature,"within-commodity standardised DS4 features; preferred over raw levels since 81-99.9% of their variance is between-commodity (EDA B1), not a time-varying signal"
+DS2DS4,mqi_21d_trend_z,feature,"within-commodity standardised DS4 features; preferred over raw levels since 81-99.9% of their variance is between-commodity (EDA B1), not a time-varying signal"
+DS2DS4,mqi_63d_trend_z,feature,"within-commodity standardised DS4 features; preferred over raw levels since 81-99.9% of their variance is between-commodity (EDA B1), not a time-varying signal"
+DS2DS4,supply_disruption_prob_z,feature,"within-commodity standardised DS4 features; preferred over raw levels since 81-99.9% of their variance is between-commodity (EDA B1), not a time-varying signal"
+DS2DS4,substitution_elasticity_z,feature,"within-commodity standardised DS4 features; preferred over raw levels since 81-99.9% of their variance is between-commodity (EDA B1), not a time-varying signal"
+DS2DS4,green_premium_per_kg_z,feature,"within-commodity standardised DS4 features; preferred over raw levels since 81-99.9% of their variance is between-commodity (EDA B1), not a time-varying signal"
+DS2DS4,carbon_intensity_virgin_z,feature,"within-commodity standardised DS4 features; preferred over raw levels since 81-99.9% of their variance is between-commodity (EDA B1), not a time-varying signal"
+DS2DS4,carbon_intensity_recycled_z,feature,"within-commodity standardised DS4 features; preferred over raw levels since 81-99.9% of their variance is between-commodity (EDA B1), not a time-varying signal"
+DS2DS4,herfindahl_index_z,feature,"within-commodity standardised DS4 features; preferred over raw levels since 81-99.9% of their variance is between-commodity (EDA B1), not a time-varying signal"
+DS2DS4,mqi,feature_weak,"raw levels kept for reference; EDA B3 found 0/40 feature->future-return tests and 0/10 feature->future-volatility tests significant after FDR -- document, don't oversell"
+DS2DS4,mqi_5d_trend,feature_weak,"raw levels kept for reference; EDA B3 found 0/40 feature->future-return tests and 0/10 feature->future-volatility tests significant after FDR -- document, don't oversell"
+DS2DS4,mqi_21d_trend,feature_weak,"raw levels kept for reference; EDA B3 found 0/40 feature->future-return tests and 0/10 feature->future-volatility tests significant after FDR -- document, don't oversell"
+DS2DS4,mqi_63d_trend,feature_weak,"raw levels kept for reference; EDA B3 found 0/40 feature->future-return tests and 0/10 feature->future-volatility tests significant after FDR -- document, don't oversell"
+DS2DS4,supply_disruption_prob,feature_weak,"raw levels kept for reference; EDA B3 found 0/40 feature->future-return tests and 0/10 feature->future-volatility tests significant after FDR -- document, don't oversell"
+DS2DS4,substitution_elasticity,feature_weak,"raw levels kept for reference; EDA B3 found 0/40 feature->future-return tests and 0/10 feature->future-volatility tests significant after FDR -- document, don't oversell"
+DS2DS4,green_premium_per_kg,feature_weak,"raw levels kept for reference; EDA B3 found 0/40 feature->future-return tests and 0/10 feature->future-volatility tests significant after FDR -- document, don't oversell"
+DS2DS4,carbon_intensity_virgin,feature_weak,"raw levels kept for reference; EDA B3 found 0/40 feature->future-return tests and 0/10 feature->future-volatility tests significant after FDR -- document, don't oversell"
+DS2DS4,carbon_intensity_recycled,feature_weak,"raw levels kept for reference; EDA B3 found 0/40 feature->future-return tests and 0/10 feature->future-volatility tests significant after FDR -- document, don't oversell"
+DS2DS4,herfindahl_index,feature_weak,"raw levels kept for reference; EDA B3 found 0/40 feature->future-return tests and 0/10 feature->future-volatility tests significant after FDR -- document, don't oversell"
+DS2DS4,bollinger_upper,exclude_redundant,redundant with bollinger_z + close; keeping all three triples up collinear information
+DS2DS4,bollinger_lower,exclude_redundant,redundant with bollinger_z + close; keeping all three triples up collinear information
+DS2DS4,open,metadata_do_not_use_for_range_vol,"OHLC range is far narrower than close-to-close volatility implies (Parkinson/close-to-close ratio 0.28-0.51, EDA A7); do not build Parkinson/ATR-style range estimators from these"
+DS2DS4,high,metadata_do_not_use_for_range_vol,"OHLC range is far narrower than close-to-close volatility implies (Parkinson/close-to-close ratio 0.28-0.51, EDA A7); do not build Parkinson/ATR-style range estimators from these"
+DS2DS4,low,metadata_do_not_use_for_range_vol,"OHLC range is far narrower than close-to-close volatility implies (Parkinson/close-to-close ratio 0.28-0.51, EDA A7); do not build Parkinson/ATR-style range estimators from these"
+DS2DS4,volume,metadata_do_not_use_for_range_vol,"OHLC range is far narrower than close-to-close volatility implies (Parkinson/close-to-close ratio 0.28-0.51, EDA A7); do not build Parkinson/ATR-style range estimators from these"
+DS2DS4,daily_return,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,return_5d,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,return_21d,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,volatility_5d_ann,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,volatility_21d_ann,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,volatility_63d_ann,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,sma_21,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,sma_63,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,bollinger_z,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,rsi_14,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,macd,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,macd_signal,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,momentum_10d,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,momentum_21d,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,close,feature,"supplied technical indicators, used as-is (all backward-looking at time t)"
+DS2DS4,date,id,"composite primary key, unique (audit)"
+DS2DS4,commodity,id,"composite primary key, unique (audit)"
+DS5,monthly_return,exclude_unreliable,irreconcilable with price_usd_per_kg (audit DS5-02); use derived_monthly_return instead
+DS5,derived_monthly_return,feature,"returns/volatility derived from price_usd_per_kg, first month per element is NaN by construction (pct_change)"
+DS5,rolling_vol_12m_ann,feature,"returns/volatility derived from price_usd_per_kg, first month per element is NaN by construction (pct_change)"
+DS5,date,id,composite key
+DS5,element,id,composite key
+DS5,price_usd_per_kg,feature,level; joined into DS1 as a static cost feature in Part A5

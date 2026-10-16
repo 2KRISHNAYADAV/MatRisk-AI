@@ -1,0 +1,6 @@
+target,model_R2_oof,catmean_baseline_R2,beats_baseline,model_MAE
+bulk_modulus_GPa,0.4416,0.5124,False,49.1024
+shear_modulus_GPa,0.2225,0.3582,False,33.7432
+density_g_cm3,0.7584,0.2547,True,1.037
+melting_point_K,0.2604,0.3583,False,447.1883
+formation_energy_per_atom_eV,0.5461,0.5896,False,0.7866

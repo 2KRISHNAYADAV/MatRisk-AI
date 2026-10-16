@@ -1,0 +1,6 @@
+model,metric,value
+condition_rating (full features),R2_oof,0.7832693648156639
+condition_rating (age+corrosion only),R2_oof,0.8100529106293842
+case-control failure classifier,AUC_oof,0.7374797230464887
+"case-control, corrosion-rate-only baseline",AUC_oof,0.6032580613254204
+severity_ord,R2_oof,-0.31874194715209336

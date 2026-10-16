@@ -1,0 +1,8 @@
+notebook,model,metric,value,beats_simple_baseline
+04,bulk_modulus_GPa,R2_oof,0.4416,False
+04,shear_modulus_GPa,R2_oof,0.2225,False
+05,condition_rating (full),R2_oof,0.7832693648156639,
+05,case-control classifier,AUC_oof,0.7374797230464887,True
+05,severity_ord,R2_oof,-0.3187419471520933,False
+06,credit portfolio,annual EL ($M),5.816116963373267,
+07,SC-003 stress multiple,EL multiple vs baseline,2.9147788034997615,

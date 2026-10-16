@@ -1,0 +1,7 @@
+component,status,note
+DS1 material property models (04),research-grade,"beats category baseline on 1/5 targets (density, and even that rides on a physically backwards correlation); is_metal solved exactly; is_stable capped ~0.71-0.72 AUC without energy_above_hull_eV"
+DS3 condition-rating model (05),usable with caveats,close to a 2-variable function of age+corrosion; monotonic by construction; not validated against any ground truth beyond the supplied labels
+DS6 case-control failure classifier (05/08),usable with caveats,AUC 0.74 vs 0.60 single-feature baseline; monotonic; PD calibration rests on the DS3-as-population assumption stated in 03 and repeated at every use
+Financial risk engine (06),usable with caveats,"VaR/ES via historical simulation, no distributional assumption; credit EL/MC internally consistent; premiums ~10x computed EL with ~zero correlation to risk"
+Scenario stress testing (07),demonstration-grade,"mechanically sound and reuses 05/06's actual fitted models, but asset-level targeting is impossible with this data; segment-level shocks only"
+Interpretability (08),complete,SHAP + partial dependence confirm the monotonic fixes hold and explain the density model's backwards finding at the prediction level

@@ -1,0 +1,10 @@
+book,metric,value
+market,basket VaR95 (1d),0.012569831250000002
+market,basket ES95 (1d),0.015422919270833335
+credit,portfolio EAD ($M),1876.84
+credit,"portfolio annual EL ($M, closed-form)",5.816116963373267
+credit,MC VaR95 ($M),8.815497049999998
+credit,MC VaR99 ($M),10.433514260000004
+credit,MC ES95 ($M),9.834264350000002
+business,total premiums collected ($M),56.38510000000001
+business,premium / EL ratio,9.69462965670784
